@@ -1,5 +1,5 @@
-//var myCanvas = document.querySelector(".my-canvas");
-//var ctx = myCanvas.getContext("2d");
+var myCanvas = document.querySelector(".my-canvas");
+var ctx = myCanvas.getContext("2d");
 
 var levelOne = document.querySelector(".level");
 levelOne.style.visibility = "hidden";
@@ -24,3 +24,23 @@ levelOne.onclick = function() {
   match.style.visibility = "visible";
   arrows.style.visibility = "visible";
 };
+
+var arrowImg = new Image();
+arrowImg.src = "./images/down-arrow.png";
+
+var arrowHeight = 100;
+var arrowWidth = 1500;
+
+function drawScene() {
+  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+  arrowWidth -= 4;
+
+  ctx.drawImage(arrowImg, arrowWidth, arrowHeight, 100, 100);
+
+  requestAnimationFrame(function() {
+    drawScene();
+  });
+}
+
+drawScene();

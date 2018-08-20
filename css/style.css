@@ -6,6 +6,8 @@ body {
 
 .my-canvas {
   border: 1px solid black;
+  position: absolute;
+  margin-top: 300px;
 }
 
 h1 {
@@ -48,5 +50,6 @@ h1 {
 }
 
 .movement {
-  display: inline;
+  display: flex;
+  justify-content: flex-start;
 }
