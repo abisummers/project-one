@@ -5,7 +5,6 @@ body {
 }
 
 .my-canvas {
-  border: 1px solid black;
   position: absolute;
   margin-top: 300px;
 }
