@@ -5,10 +5,7 @@ var levelOne = document.querySelector(".level");
 levelOne.style.visibility = "hidden";
 
 var match = document.querySelector("#match");
-// match.style.visibility = "hidden";
-
-// var arrows = document.querySelector(".arrows");
-// arrows.style.visibility = "hidden";
+match.style.visibility = "hidden";
 
 var startButton = document.querySelector("#startBtn");
 var instructions = document.querySelector("#instructions");
@@ -16,40 +13,48 @@ var instructions = document.querySelector("#instructions");
 startButton.onclick = function() {
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
-  // levelOne.style.visibility = "visible";
+  match.style.visibility = "visible";
   drawScene();
 };
 
 levelOne.onclick = function() {
   levelOne.style.visibility = "hidden";
   match.style.visibility = "visible";
-  //arrows.style.visibility = "visible";
 };
 
-ctx.fillStyle = "orange";
-ctx.strokeRect(100, 70, 150, 150);
+function Arrow(direction) {
+  this.img = new Image();
+  this.img.src = `./images/${direction}-arrow.png`;
+  this.drawMe = () => {
+    ctx.drawImage(this.img, arrowWidth, arrowHeight, 100, 100);
+  };
+}
 
-var arrowImgDown = new Image();
-arrowImgDown.src = "./images/down-arrow.png";
+var allArrows = [];
+var down = new Arrow("down");
+allArrows.push(down);
 
-var arrowImgUp = new Image();
-arrowImgUp.src = "./images/up-arrow.png";
+var up = new Arrow("up");
+allArrows.push(up);
 
-var arrowImgLeft = new Image();
-arrowImgLeft.src = "./images/left-arrow.png";
+var left = new Arrow("left");
+allArrows.push(left);
 
-var arrowImgRight = new Image();
-arrowImgRight.src = "./images/right-arrow.png";
+var right = new Arrow("right");
+allArrows.push(right);
 
 var arrowHeight = 100;
 var arrowWidth = 1500;
 
+console.log(allArrows);
+
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-
   arrowWidth -= 4;
-
-  ctx.drawImage(arrowImgDown, arrowWidth, arrowHeight, 100, 100);
+  //ctx.drawImage(down.img, arrowWidth, arrowHeight, 100, 100);
+  allArrows.forEach(function(el) {
+    el.drawMe();
+  });
 
   requestAnimationFrame(function() {
     drawScene();
@@ -59,27 +64,3 @@ function drawScene() {
 var matchCoord = match.getBoundingClientRect();
 var leftX = matchCoord.left;
 var rightX = matchCoord.right;
-
-var imageCoord = arrowImgDown.getBoundingClientRect();
-var imgLeftX = imageCoord.left;
-var imgRightX = imageCoord.right;
-
-document.onkeydown = function(event) {
-  switch (event.keyCode) {
-    case 37:
-      //arrowImgLeft
-      break;
-
-    case 38:
-      //arrowImgUp
-      break;
-
-    case 39:
-      //arrowImgRight
-      break;
-
-    case 40:
-      //arrowImgDown
-      break;
-  }
-};
