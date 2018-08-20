@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  background-color: rgb(114, 136, 156);
+  font-family: "Open Sans Condensed", sans-serif;
+}
+
+.my-canvas {
+  border: 1px solid black;
+}
+
+h1 {
+  font-size: 4em;
+  text-align: center;
+}
+
+#instructions {
+  border: black 2px solid;
+  width: 40%;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-left: 50px;
+  background-color: rgb(212, 206, 206);
+}
+
+.instructions h2 {
+  font-size: 2em;
+}
+
+.instructions ol {
+  font-size: 1.5em;
+  list-style-type: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.top {
+  justify-content: space-between;
+}
+
+.score {
+  border: 2px black solid;
+  width: 150px;
+  height: 100px;
+  margin-right: 50px;
+  background-color: rgb(212, 206, 206);
+}
+
+.movement {
+  display: inline;
+}

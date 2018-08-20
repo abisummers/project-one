@@ -1,0 +1,33 @@
+#startBtn {
+  font-size: 2em;
+  padding: 20px 40px;
+  width: 20%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(212, 206, 206);
+}
+
+#match {
+  border: 2px black solid;
+  width: 200px;
+  height: 200px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  background-color: rgb(212, 206, 206);
+}
+
+.arrows {
+  width: 150px;
+  height: 150px;
+  border: 2px black solid;
+}
+
+.level {
+  font-size: 2em;
+  text-align: center;
+  border: 2px black solid;
+  width: 30%;
+  margin: auto;
+  background-color: rgb(212, 206, 206);
+}
