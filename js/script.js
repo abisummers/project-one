@@ -15,6 +15,16 @@ startButton.onclick = function() {
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
   drawScene();
+
+  jQuery(function($) {
+    $("#match").click(function(e) {
+      console.log("clicked on div");
+      e.stopPropagation(); // Prevent bubbling
+    });
+    $("body").click(function(e) {
+      console.log("clicked outside of div");
+    });
+  });
 };
 
 levelOne.onclick = function() {
@@ -43,7 +53,7 @@ allArrows.push(left);
 var right = new Arrow("right");
 allArrows.push(right);
 
-var arrowHeight = 100;
+var arrowHeight = 160;
 var arrowWidth = 1500;
 
 console.log(allArrows);
@@ -51,10 +61,10 @@ console.log(allArrows);
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   arrowWidth -= 4;
-  //ctx.drawImage(down.img, arrowWidth, arrowHeight, 100, 100);
-  allArrows.forEach(function(el) {
-    el.drawMe();
-  });
+  ctx.drawImage(down.img, arrowWidth, arrowHeight, 100, 100);
+  // allArrows.forEach(function(el) {
+  //   el.drawMe();
+  // });
 
   requestAnimationFrame(function() {
     drawScene();
