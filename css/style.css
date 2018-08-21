@@ -7,6 +7,7 @@ body {
 .my-canvas {
   position: absolute;
   margin-top: 300px;
+  z-index: 1;
 }
 
 h1 {
@@ -60,6 +61,6 @@ h1 {
   height: 200px;
   margin-left: 150px;
   margin-bottom: 50px;
-  background-color: transparent;
-  /* z-index: 0; */
+  background-color: rgb(212, 206, 206);
+  z-index: 0;
 }
