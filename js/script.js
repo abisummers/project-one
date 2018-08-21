@@ -22,28 +22,18 @@ startButton.onclick = function() {
 //   match.style.visibility = "visible";
 // };
 
-function Arrow(direction, myArrowWidth) {
+function Arrow(direction, offset) {
   this.arrrow = direction;
   this.img = new Image();
   this.img.src = `./images/${direction}-arrow.png`;
-  this.arrowHeight = 160;
-  this.arrowWidth = myArrowWidth;
-  this.x = 100;
-  this.y = 100;
+  this.y = 160;
+  this.x = offset;
+  this.width = 100;
+  this.height = 100;
 
   this.drawMe = () => {
-    ctx.drawImage(this.img, this.arrowWidth, this.arrowHeight, this.x, this.y);
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   };
-}
-
-var score = 0;
-
-function check(arrows) {
-  arrows.forEach(function(el) {
-    if (el.arrowWidth < 354 && el.arrowWidth > 150) {
-      score += 10;
-    }
-  });
 }
 
 var allArrows = [];
@@ -72,7 +62,7 @@ allArrows.push(right);
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   allArrows.forEach(function(el) {
-    el.arrowWidth -= 6;
+    el.x -= 6;
     el.drawMe();
   });
 
@@ -93,37 +83,45 @@ var matchBox = {
   height: 200
 };
 
-function matched(box, img) {
-  //console.log(img);
-  return box.x + box.width <= img.x && box.x >= img.x + img.width;
+function matched(box, arrows) {
+  return arrows.some(
+    arrow => box.x + box.width >= arrow.x + arrow.width && box.x <= arrow.x
+  );
 }
-//matched(matchBox, Arrow);
 
+var score = 0;
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
     case 37:
-      check(leftArrows);
-      matched(matchBox, Arrow);
-      console.log(Arrow);
-      // if (matched(matchBox, Arrow) === leftArrows) {
-      console.log("add 10 points");
-      // }
-      //console.log("left");
+      event.preventDefault();
+      if (matched(matchBox, leftArrows)) {
+        score += 10;
+        console.log(score);
+      }
       break;
 
     case 38:
-      check(upArrows);
-      console.log("up clicked");
+      event.preventDefault();
+      if (matched(matchBox, upArrows)) {
+        score += 10;
+        console.log(score);
+      }
       break;
 
     case 39:
-      check(rightArrows);
-      console.log("right clicked");
+      event.preventDefault();
+      if (matched(matchBox, rightArrows)) {
+        score += 10;
+        console.log(score);
+      }
       break;
 
     case 40:
-      check(downArrows);
-      console.log("down clicked");
+      event.preventDefault();
+      if (matched(matchBox, downArrows)) {
+        score += 10;
+        console.log(score);
+      }
       break;
   }
 });
