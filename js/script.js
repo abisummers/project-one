@@ -23,6 +23,7 @@ startButton.onclick = function() {
 // };
 
 function Arrow(direction, myArrowWidth) {
+  this.arrrow = direction;
   this.img = new Image();
   this.img.src = `./images/${direction}-arrow.png`;
   this.arrowHeight = 160;
@@ -35,32 +36,44 @@ function Arrow(direction, myArrowWidth) {
   };
 }
 
+var score = 0;
+
+function check(arrows) {
+  arrows.forEach(function(el) {
+    if (el.arrowWidth < 354 && el.arrowWidth > 150) {
+      score += 10;
+    }
+  });
+}
+
 var allArrows = [];
+
+var downArrows = [];
 var down = new Arrow("down", 1500);
+downArrows.push(down);
 allArrows.push(down);
 
+var upArrows = [];
 var up = new Arrow("up", 1800);
+upArrows.push(up);
 allArrows.push(up);
 
-var left = new Arrow("left", 2000);
+var leftArrows = [];
+var left = new Arrow("left", 2100);
+leftArrows.push(left);
 allArrows.push(left);
 
-var right = new Arrow("right", 2200);
+var rightArrows = [];
+var right = new Arrow("right", 2400);
+rightArrows.push(right);
 allArrows.push(right);
 
-// var arrowHeight = 160;
-// var arrowWidth = 1500;
-
-console.log(allArrows);
-
+//allArrow is not defined
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-  //ctx.drawImage(down.img, arrowWidth, arrowHeight, 100, 100);
   allArrows.forEach(function(el) {
-    // setInterval(function() {
-    el.arrowWidth -= 2;
+    el.arrowWidth -= 6;
     el.drawMe();
-    // }, 1000);
   });
 
   requestAnimationFrame(function() {
@@ -68,14 +81,58 @@ function drawScene() {
   });
 }
 
-// img.onload = drawScene;
-
 var matchCoord = match.getBoundingClientRect();
 var leftX = matchCoord.left;
 var rightX = matchCoord.right;
+console.log(leftX, rightX);
 
-jQuery(function($) {
-  $("#match").click(function(e) {
-    console.log("clicked on div");
-  });
+var matchBox = {
+  x: leftX,
+  y: rightX,
+  width: 200,
+  height: 200
+};
+
+function matched(box, img) {
+  //console.log(img);
+  return box.x + box.width <= img.x && box.x >= img.x + img.width;
+}
+//matched(matchBox, Arrow);
+
+document.addEventListener("keydown", event => {
+  switch (event.keyCode) {
+    case 37:
+      check(leftArrows);
+      matched(matchBox, Arrow);
+      console.log(Arrow);
+      // if (matched(matchBox, Arrow) === leftArrows) {
+      console.log("add 10 points");
+      // }
+      //console.log("left");
+      break;
+
+    case 38:
+      check(upArrows);
+      console.log("up clicked");
+      break;
+
+    case 39:
+      check(rightArrows);
+      console.log("right clicked");
+      break;
+
+    case 40:
+      check(downArrows);
+      console.log("down clicked");
+      break;
+  }
 });
+
+// function Arrow(direction, myArrowWidth) {
+//   this.arrrow = direction;
+//   this.img = new Image();
+//   this.img.src = `./images/${direction}-arrow.png`;
+//   this.arrowHeight = 160;
+//   this.arrowWidth = myArrowWidth;
+//   this.x = 100;
+//   this.y = 100;
