@@ -74,7 +74,7 @@ function drawScene() {
 var matchCoord = match.getBoundingClientRect();
 var leftX = matchCoord.left;
 var rightX = matchCoord.right;
-console.log(leftX, rightX);
+//console.log(leftX, rightX);
 
 var matchBox = {
   x: leftX,
@@ -89,17 +89,20 @@ function matched(box, arrows) {
   );
 }
 
+var scoreCounter = document.querySelector(".score");
+
 var score = 0;
+
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
     case 37:
       event.preventDefault();
       if (matched(matchBox, leftArrows)) {
         score += 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       } else if (matched(matchBox, upArrows)) {
         score -= 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       }
       break;
 
@@ -107,10 +110,10 @@ document.addEventListener("keydown", event => {
       event.preventDefault();
       if (matched(matchBox, upArrows)) {
         score += 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       } else if (matched(matchBox, upArrows)) {
         score -= 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       }
       break;
 
@@ -118,10 +121,10 @@ document.addEventListener("keydown", event => {
       event.preventDefault();
       if (matched(matchBox, rightArrows)) {
         score += 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       } else if (matched(matchBox, upArrows)) {
         score -= 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       }
       break;
 
@@ -129,10 +132,10 @@ document.addEventListener("keydown", event => {
       event.preventDefault();
       if (matched(matchBox, downArrows)) {
         score += 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       } else if (matched(matchBox, upArrows)) {
         score -= 10;
-        console.log(score);
+        scoreCounter.innerHTML = score;
       }
       break;
   }
