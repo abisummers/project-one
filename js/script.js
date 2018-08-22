@@ -14,6 +14,7 @@ startButton.onclick = function() {
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
+  //getRandomArrow();
   drawScene();
 };
 
@@ -39,33 +40,80 @@ function Arrow(direction, offset) {
 var allArrows = [];
 
 var downArrows = [];
-var down = new Arrow("down", 1500);
-downArrows.push(down);
-allArrows.push(down);
+// var down = new Arrow("down", 1500);
+// downArrows.push(down);
+// allArrows.push(down);
 
 var upArrows = [];
-var up = new Arrow("up", 1800);
-upArrows.push(up);
-allArrows.push(up);
+// var up = new Arrow("up", 1800);
+// upArrows.push(up);
+// allArrows.push(up);
 
 var leftArrows = [];
-var left = new Arrow("left", 2100);
-leftArrows.push(left);
-allArrows.push(left);
+// var left = new Arrow("left", 2100);
+// leftArrows.push(left);
+// allArrows.push(left);
 
 var rightArrows = [];
-var right = new Arrow("right", 2400);
-rightArrows.push(right);
-allArrows.push(right);
+// var right = new Arrow("right", 2400);
+// rightArrows.push(right);
+// allArrows.push(right);
 
-//allArrow is not defined
+//console.log(leftArrows, upArrows, rightArrows, downArrows);
+
+function getRandomArrow() {
+  var num = Math.floor(Math.random() * 4);
+  console.log(num);
+
+  var left = new Arrow("left", 2100);
+  var left1 = new Arrow("left", 2700);
+  var left2 = new Arrow("left", 3000);
+  leftArrows.push(left, left1, left2);
+  allArrows.push(left, left1, left2);
+
+  var up = new Arrow("up", 1800);
+  var up1 = new Arrow("up", 3900);
+  upArrows.push(up, up1);
+  allArrows.push(up, up1);
+
+  var right = new Arrow("right", 2400);
+  var right1 = new Arrow("right", 3600);
+  rightArrows.push(right, right1);
+  allArrows.push(right, right1);
+
+  var down = new Arrow("down", 1500);
+  var down1 = new Arrow("down", 3300);
+  var down2 = new Arrow("down", 4100);
+  downArrows.push(down, down1, down2);
+  allArrows.push(down, down1, down2);
+  // if (num === 0) {
+  //   left = new Arrow("left", 2900);
+  //   leftArrows.push(left);
+  // }
+  // if (num === 1) {
+  //   up = new Arrow("up", 2900);
+  //   upArrows.push(up);
+  // }
+  // if (num === 2) {
+  //   right = new Arrow("right", 2900);
+  //   rightArrows.push(right);
+  // }
+  // if (num === 3) {
+  //   down = new Arrow("down", 2900);
+  //   downArrows.push(down);
+  // }
+}
+
+getRandomArrow();
+
+console.log(leftArrows, upArrows, rightArrows, downArrows);
+
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   allArrows.forEach(function(el) {
     el.x -= 6;
     el.drawMe();
   });
-
   requestAnimationFrame(function() {
     drawScene();
   });
@@ -74,7 +122,6 @@ function drawScene() {
 var matchCoord = match.getBoundingClientRect();
 var leftX = matchCoord.left;
 var rightX = matchCoord.right;
-//console.log(leftX, rightX);
 
 var matchBox = {
   x: leftX,
@@ -90,7 +137,6 @@ function matched(box, arrows) {
 }
 
 var scoreCounter = document.querySelector(".score");
-
 var score = 0;
 
 document.addEventListener("keydown", event => {
