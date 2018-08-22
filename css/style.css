@@ -45,7 +45,7 @@ h1 {
   border: 2px black solid;
   width: 150px;
   height: 100px;
-  margin-right: 50px;
+  margin: 50px;
   background-color: rgb(212, 206, 206);
   text-align: center;
   font-size: 3em;
