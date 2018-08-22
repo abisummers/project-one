@@ -97,6 +97,9 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, leftArrows)) {
         score += 10;
         console.log(score);
+      } else if (matched(matchBox, upArrows)) {
+        score -= 10;
+        console.log(score);
       }
       break;
 
@@ -104,6 +107,9 @@ document.addEventListener("keydown", event => {
       event.preventDefault();
       if (matched(matchBox, upArrows)) {
         score += 10;
+        console.log(score);
+      } else if (matched(matchBox, upArrows)) {
+        score -= 10;
         console.log(score);
       }
       break;
@@ -113,6 +119,9 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, rightArrows)) {
         score += 10;
         console.log(score);
+      } else if (matched(matchBox, upArrows)) {
+        score -= 10;
+        console.log(score);
       }
       break;
 
@@ -121,16 +130,10 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, downArrows)) {
         score += 10;
         console.log(score);
+      } else if (matched(matchBox, upArrows)) {
+        score -= 10;
+        console.log(score);
       }
       break;
   }
 });
-
-// function Arrow(direction, myArrowWidth) {
-//   this.arrrow = direction;
-//   this.img = new Image();
-//   this.img.src = `./images/${direction}-arrow.png`;
-//   this.arrowHeight = 160;
-//   this.arrowWidth = myArrowWidth;
-//   this.x = 100;
-//   this.y = 100;
