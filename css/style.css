@@ -41,13 +41,17 @@ h1 {
   justify-content: space-between;
 }
 
-.score {
+.scoreBox {
   border: 2px black solid;
   width: 150px;
-  height: 100px;
+  height: 200px;
   margin: 50px;
   background-color: rgb(212, 206, 206);
   text-align: center;
+  font-size: 1.5em;
+}
+
+#scores {
   font-size: 3em;
 }
 
@@ -55,7 +59,13 @@ h1 {
   display: flex;
   justify-content: flex-start;
 }
-
+.lives {
+  height: 100px;
+  width: 200px;
+  position: relative;
+  float: left;
+  background-color: white;
+}
 #match {
   position: relative;
   border: 2px black solid;

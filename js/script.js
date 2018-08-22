@@ -1,8 +1,8 @@
 var myCanvas = document.querySelector(".my-canvas");
 var ctx = myCanvas.getContext("2d");
 
-var levelOne = document.querySelector(".level");
-levelOne.style.visibility = "hidden";
+// var lives = document.querySelector(".lives");
+// lives.style.visibility = "hidden";
 
 var match = document.querySelector("#match");
 match.style.visibility = "hidden";
@@ -14,16 +14,12 @@ startButton.onclick = function() {
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
-  //getRandomArrow();
+  // lives.style.visibility = "visible";
   drawScene();
 };
 
-// levelOne.onclick = function() {
-//   levelOne.style.visibility = "hidden";
-//   match.style.visibility = "visible";
-// };
-
 function Arrow(direction, offset) {
+  isActive = true;
   this.arrrow = direction;
   this.img = new Image();
   this.img.src = `./images/${direction}-arrow.png`;
@@ -38,28 +34,10 @@ function Arrow(direction, offset) {
 }
 
 var allArrows = [];
-
 var downArrows = [];
-// var down = new Arrow("down", 1500);
-// downArrows.push(down);
-// allArrows.push(down);
-
 var upArrows = [];
-// var up = new Arrow("up", 1800);
-// upArrows.push(up);
-// allArrows.push(up);
-
 var leftArrows = [];
-// var left = new Arrow("left", 2100);
-// leftArrows.push(left);
-// allArrows.push(left);
-
 var rightArrows = [];
-// var right = new Arrow("right", 2400);
-// rightArrows.push(right);
-// allArrows.push(right);
-
-//console.log(leftArrows, upArrows, rightArrows, downArrows);
 
 function getRandomArrow() {
   var num = Math.floor(Math.random() * 4);
@@ -86,22 +64,6 @@ function getRandomArrow() {
   var down2 = new Arrow("down", 4200);
   downArrows.push(down, down1, down2);
   allArrows.push(down, down1, down2);
-  // if (num === 0) {
-  //   left = new Arrow("left", 2900);
-  //   leftArrows.push(left);
-  // }
-  // if (num === 1) {
-  //   up = new Arrow("up", 2900);
-  //   upArrows.push(up);
-  // }
-  // if (num === 2) {
-  //   right = new Arrow("right", 2900);
-  //   rightArrows.push(right);
-  // }
-  // if (num === 3) {
-  //   down = new Arrow("down", 2900);
-  //   downArrows.push(down);
-  // }
 }
 
 getRandomArrow();
@@ -111,13 +73,40 @@ console.log(leftArrows, upArrows, rightArrows, downArrows);
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   allArrows.forEach(function(el) {
-    el.x -= 6;
-    el.drawMe();
+    if (isActive) {
+      el.x -= 6;
+      el.drawMe();
+    } else {
+      gameOver.drawMe();
+    }
   });
+
   requestAnimationFrame(function() {
     drawScene();
   });
 }
+
+var gameOver = {
+  x: 500,
+  y: 150,
+  opacity: 0,
+  drawMe: function() {
+    //fade in the text with globalAlpha
+    if (this.opacity < 1) {
+      this.opacity += 0.01;
+    }
+
+    ctx.localAlpha = this.opacity;
+    ctx.font = "180px Open Sans Condensed";
+    ctx.fillStyle = "black";
+    // ctx.fillText("Game Over", this.x, this.y);
+
+    ctx.lineWidth = 2;
+    ctx.fillStyle = "black";
+    ctx.strokeText("Game Over", this.x, this.y);
+    ctx.gloabalAlpha = 1;
+  }
+};
 
 var matchCoord = match.getBoundingClientRect();
 var leftX = matchCoord.left;
@@ -137,8 +126,14 @@ function matched(box, arrows) {
   );
 }
 
-var scoreCounter = document.querySelector(".score");
+var scoreCounter = document.querySelector("#scores");
 var score = 0;
+
+var lives = 3;
+var livesCounter = document.querySelector("#lives");
+
+if (livesCounter === "GAME OVER") {
+}
 
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
@@ -152,8 +147,10 @@ document.addEventListener("keydown", event => {
         matched(matchBox, rightArrows) ||
         matched(matchBox, downArrows)
       ) {
-        score -= 10;
-        scoreCounter.innerHTML = score;
+        if (lives === 0) {
+          return (isActive = false);
+        } else lives -= 1;
+        livesCounter.innerHTML = lives;
       }
       break;
 
@@ -167,10 +164,11 @@ document.addEventListener("keydown", event => {
         matched(matchBox, rightArrows) ||
         matched(matchBox, downArrows)
       ) {
-        score -= 10;
-        scoreCounter.innerHTML = score;
+        if (lives === 0) {
+          return (isActive = false);
+        } else lives -= 1;
+        livesCounter.innerHTML = lives;
       }
-
       break;
 
     case 39:
@@ -183,8 +181,10 @@ document.addEventListener("keydown", event => {
         matched(matchBox, leftArrows) ||
         matched(matchBox, downArrows)
       ) {
-        score -= 10;
-        scoreCounter.innerHTML = score;
+        if (lives === 0) {
+          return (isActive = false);
+        } else lives -= 1;
+        livesCounter.innerHTML = lives;
       }
       break;
 
@@ -198,8 +198,10 @@ document.addEventListener("keydown", event => {
         matched(matchBox, rightArrows) ||
         matched(matchBox, leftArrows)
       ) {
-        score -= 10;
-        scoreCounter.innerHTML = score;
+        if (lives === 0) {
+          return (isActive = false);
+        } else lives -= 1;
+        livesCounter.innerHTML = lives;
       }
       break;
   }
