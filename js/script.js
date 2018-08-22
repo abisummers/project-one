@@ -83,7 +83,7 @@ function getRandomArrow() {
 
   var down = new Arrow("down", 1500);
   var down1 = new Arrow("down", 3300);
-  var down2 = new Arrow("down", 4100);
+  var down2 = new Arrow("down", 4200);
   downArrows.push(down, down1, down2);
   allArrows.push(down, down1, down2);
   // if (num === 0) {
@@ -129,6 +129,7 @@ var matchBox = {
   width: 200,
   height: 200
 };
+console.log(matchBox);
 
 function matched(box, arrows) {
   return arrows.some(
@@ -146,7 +147,11 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, leftArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
-      } else if (matched(matchBox, upArrows)) {
+      } else if (
+        matched(matchBox, upArrows) ||
+        matched(matchBox, rightArrows) ||
+        matched(matchBox, downArrows)
+      ) {
         score -= 10;
         scoreCounter.innerHTML = score;
       }
@@ -157,10 +162,15 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, upArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
-      } else if (matched(matchBox, upArrows)) {
+      } else if (
+        matched(matchBox, leftArrows) ||
+        matched(matchBox, rightArrows) ||
+        matched(matchBox, downArrows)
+      ) {
         score -= 10;
         scoreCounter.innerHTML = score;
       }
+
       break;
 
     case 39:
@@ -168,7 +178,11 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, rightArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
-      } else if (matched(matchBox, upArrows)) {
+      } else if (
+        matched(matchBox, upArrows) ||
+        matched(matchBox, leftArrows) ||
+        matched(matchBox, downArrows)
+      ) {
         score -= 10;
         scoreCounter.innerHTML = score;
       }
@@ -179,7 +193,11 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, downArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
-      } else if (matched(matchBox, upArrows)) {
+      } else if (
+        matched(matchBox, upArrows) ||
+        matched(matchBox, rightArrows) ||
+        matched(matchBox, leftArrows)
+      ) {
         score -= 10;
         scoreCounter.innerHTML = score;
       }
