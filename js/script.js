@@ -21,13 +21,14 @@ startButton.onclick = function() {
 };
 
 replay.onclick = function() {
-  score = 0;
-  lives = 3;
-  getRandomArrow();
-  isActive = true;
-  match.style.visibility = "visible";
-  replay.style.visibility = "hidden";
-  drawScene();
+  // getRandomArrow();
+  // //isActive = true;
+  // match.style.visibility = "visible";
+  // replay.style.visibility = "hidden";
+  // score = 0;
+  // lives = 3;
+  // drawScene();
+  window.location.href = "index.html";
 };
 
 function Arrow(direction, offset) {
@@ -52,8 +53,6 @@ var leftArrows = [];
 var rightArrows = [];
 
 function getRandomArrow() {
-  //var num = Math.floor(Math.random() * 4);
-  //console.log(num);
   allArrows = [];
   downArrows = [];
   upArrows = [];
@@ -76,7 +75,7 @@ function getRandomArrow() {
 
   var right = new Arrow("right", 2400);
   var right1 = new Arrow("right", 3600);
-  var right2 = new Arrow("right", 5500);
+  var right2 = new Arrow("right", 5400);
   rightArrows.push(right, right1, right2);
   allArrows.push(right, right1, right2);
 
@@ -89,12 +88,14 @@ function getRandomArrow() {
 
 getRandomArrow();
 
-console.log(leftArrows, upArrows, rightArrows, downArrows);
-
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   allArrows.forEach(function(el) {
-    if (isActive) {
+    if (score >= 100) {
+      win.drawMe();
+      match.style.visibility = "hidden";
+      replay.style.visibility = "visible";
+    } else if (isActive) {
       el.x -= 6;
       el.drawMe();
     } else {
@@ -108,6 +109,31 @@ function drawScene() {
     drawScene();
   });
 }
+
+var winImg = new Image();
+winImg.src = "./images/win.png";
+
+var win = {
+  x: 500,
+  y: 150,
+  opacity: 0,
+  drawMe: function() {
+    if (this.opacity < 1) {
+      this.opacity += 0.01;
+    }
+
+    ctx.localAlpha = this.opacity;
+    ctx.font = "180px Open Sans Condensed";
+    ctx.fillStyle = "black";
+
+    ctx.lineWidth = 2;
+    ctx.fillStyle = "black";
+    ctx.strokeText("WINNER!!", this.x, this.y);
+    ctx.gloabalAlpha = 1;
+    //change the image
+    //ctx.drawImage(winImg, 200, 30, 150, 150);
+  }
+};
 
 var gameOverImg = new Image();
 gameOverImg.src = "./images/game-over.gif";
@@ -165,7 +191,7 @@ document.addEventListener("keydown", event => {
   switch (event.keyCode) {
     case 37:
       event.preventDefault();
-      if (matched(matchBox, leftArrows)) {
+      if (matched(matchBox, leftArrows) && score < 100) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -184,7 +210,7 @@ document.addEventListener("keydown", event => {
 
     case 38:
       event.preventDefault();
-      if (matched(matchBox, upArrows)) {
+      if (matched(matchBox, upArrows) && score < 100) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -203,7 +229,7 @@ document.addEventListener("keydown", event => {
 
     case 39:
       event.preventDefault();
-      if (matched(matchBox, rightArrows)) {
+      if (matched(matchBox, rightArrows) && score < 100) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -222,7 +248,7 @@ document.addEventListener("keydown", event => {
 
     case 40:
       event.preventDefault();
-      if (matched(matchBox, downArrows)) {
+      if (matched(matchBox, downArrows) && score < 100) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
