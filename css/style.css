@@ -82,7 +82,8 @@ h1 {
 }
 
 #startBtn,
-#replay {
+#replay,
+#level2 {
   border: black 4px solid;
   font-size: 2em;
   padding: 20px 40px;

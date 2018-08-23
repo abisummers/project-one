@@ -1,8 +1,14 @@
 var myCanvas = document.querySelector(".my-canvas");
 var ctx = myCanvas.getContext("2d");
 
-// var lives = document.querySelector(".lives");
-// lives.style.visibility = "hidden";
+var audio = new Audio("game-sound.mp3");
+audio.loop = true;
+
+var winner = new Audio("winner.mp3");
+winner.loop = false;
+
+var level2 = document.querySelector("#level2");
+level2.style.visibility = "hidden";
 
 var replay = document.querySelector("#replay");
 replay.style.visibility = "hidden";
@@ -17,17 +23,11 @@ startButton.onclick = function() {
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
+  audio.play();
   drawScene();
 };
 
 replay.onclick = function() {
-  // getRandomArrow();
-  // //isActive = true;
-  // match.style.visibility = "visible";
-  // replay.style.visibility = "hidden";
-  // score = 0;
-  // lives = 3;
-  // drawScene();
   window.location.href = "index.html";
 };
 
@@ -86,20 +86,39 @@ function getRandomArrow() {
   allArrows.push(down, down1, down2);
 }
 
+//14 arrrow in total
 getRandomArrow();
 
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+  // if (allArrows.length === 0) {
+  //   gameOver.drawMe();
+  // }
+  if (allArrows[allArrows.length - 1].x <= -1250) {
+    gameOver.drawMe();
+    audio.pause();
+  }
+
   allArrows.forEach(function(el) {
+    //console.log(el);
     if (score >= 100) {
       win.drawMe();
+      //winner.play();
+      audio.pause();
       match.style.visibility = "hidden";
-      replay.style.visibility = "visible";
+      //replay.style.visibility = "visible";
+      //allArrows = allArrows;
+      // level2.style.visibility = "visible";
+    } else if (el === []) {
+      gameOver.drawMe();
     } else if (isActive) {
-      el.x -= 6;
+      el.x -= 10;
       el.drawMe();
+
+      //allArrows.splice(allArrows[el], 1);
     } else {
       gameOver.drawMe();
+      audio.pause();
       match.style.visibility = "hidden";
       replay.style.visibility = "visible";
     }
@@ -156,7 +175,7 @@ var gameOver = {
     ctx.strokeText("Game Over", this.x, this.y);
     ctx.gloabalAlpha = 1;
 
-    ctx.drawImage(gameOverImg, 200, 30, 150, 150);
+    //ctx.drawImage(gameOverImg, 200, 30, 150, 150);
   }
 };
 
