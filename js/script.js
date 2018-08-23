@@ -4,6 +4,9 @@ var ctx = myCanvas.getContext("2d");
 // var lives = document.querySelector(".lives");
 // lives.style.visibility = "hidden";
 
+var replay = document.querySelector("#replay");
+replay.style.visibility = "hidden";
+
 var match = document.querySelector("#match");
 match.style.visibility = "hidden";
 
@@ -14,7 +17,16 @@ startButton.onclick = function() {
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
-  // lives.style.visibility = "visible";
+  drawScene();
+};
+
+replay.onclick = function() {
+  score = 0;
+  lives = 3;
+  getRandomArrow();
+  isActive = true;
+  match.style.visibility = "visible";
+  replay.style.visibility = "hidden";
   drawScene();
 };
 
@@ -40,24 +52,33 @@ var leftArrows = [];
 var rightArrows = [];
 
 function getRandomArrow() {
-  var num = Math.floor(Math.random() * 4);
-  console.log(num);
+  //var num = Math.floor(Math.random() * 4);
+  //console.log(num);
+  allArrows = [];
+  downArrows = [];
+  upArrows = [];
+  leftArrows = [];
+  rightArrows = [];
 
   var left = new Arrow("left", 2100);
   var left1 = new Arrow("left", 2700);
   var left2 = new Arrow("left", 3000);
-  leftArrows.push(left, left1, left2);
-  allArrows.push(left, left1, left2);
+  var left3 = new Arrow("left", 5100);
+  leftArrows.push(left, left1, left2, left3);
+  allArrows.push(left, left1, left2, left3);
 
   var up = new Arrow("up", 1800);
   var up1 = new Arrow("up", 3900);
-  upArrows.push(up, up1);
-  allArrows.push(up, up1);
+  var up3 = new Arrow("up", 4500);
+  var up4 = new Arrow("up", 4800);
+  upArrows.push(up, up1, up3, up4);
+  allArrows.push(up, up1, up3, up4);
 
   var right = new Arrow("right", 2400);
   var right1 = new Arrow("right", 3600);
-  rightArrows.push(right, right1);
-  allArrows.push(right, right1);
+  var right2 = new Arrow("right", 5500);
+  rightArrows.push(right, right1, right2);
+  allArrows.push(right, right1, right2);
 
   var down = new Arrow("down", 1500);
   var down1 = new Arrow("down", 3300);
@@ -78,6 +99,8 @@ function drawScene() {
       el.drawMe();
     } else {
       gameOver.drawMe();
+      match.style.visibility = "hidden";
+      replay.style.visibility = "visible";
     }
   });
 
@@ -86,12 +109,14 @@ function drawScene() {
   });
 }
 
+var gameOverImg = new Image();
+gameOverImg.src = "./images/game-over.gif";
+
 var gameOver = {
   x: 500,
   y: 150,
   opacity: 0,
   drawMe: function() {
-    //fade in the text with globalAlpha
     if (this.opacity < 1) {
       this.opacity += 0.01;
     }
@@ -99,12 +124,13 @@ var gameOver = {
     ctx.localAlpha = this.opacity;
     ctx.font = "180px Open Sans Condensed";
     ctx.fillStyle = "black";
-    // ctx.fillText("Game Over", this.x, this.y);
 
     ctx.lineWidth = 2;
     ctx.fillStyle = "black";
     ctx.strokeText("Game Over", this.x, this.y);
     ctx.gloabalAlpha = 1;
+
+    ctx.drawImage(gameOverImg, 200, 30, 150, 150);
   }
 };
 
@@ -142,6 +168,7 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, leftArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
+        match.style.borderColor = "green";
       } else if (
         matched(matchBox, upArrows) ||
         matched(matchBox, rightArrows) ||
@@ -151,6 +178,7 @@ document.addEventListener("keydown", event => {
           return (isActive = false);
         } else lives -= 1;
         livesCounter.innerHTML = lives;
+        match.style.borderColor = "red";
       }
       break;
 
@@ -159,6 +187,7 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, upArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
+        match.style.borderColor = "green";
       } else if (
         matched(matchBox, leftArrows) ||
         matched(matchBox, rightArrows) ||
@@ -168,6 +197,7 @@ document.addEventListener("keydown", event => {
           return (isActive = false);
         } else lives -= 1;
         livesCounter.innerHTML = lives;
+        match.style.borderColor = "red";
       }
       break;
 
@@ -176,6 +206,7 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, rightArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
+        match.style.borderColor = "green";
       } else if (
         matched(matchBox, upArrows) ||
         matched(matchBox, leftArrows) ||
@@ -185,6 +216,7 @@ document.addEventListener("keydown", event => {
           return (isActive = false);
         } else lives -= 1;
         livesCounter.innerHTML = lives;
+        match.style.borderColor = "red";
       }
       break;
 
@@ -193,6 +225,7 @@ document.addEventListener("keydown", event => {
       if (matched(matchBox, downArrows)) {
         score += 10;
         scoreCounter.innerHTML = score;
+        match.style.borderColor = "green";
       } else if (
         matched(matchBox, upArrows) ||
         matched(matchBox, rightArrows) ||
@@ -202,6 +235,7 @@ document.addEventListener("keydown", event => {
           return (isActive = false);
         } else lives -= 1;
         livesCounter.innerHTML = lives;
+        match.style.borderColor = "red";
       }
       break;
   }

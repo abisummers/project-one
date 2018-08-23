@@ -11,17 +11,21 @@ body {
 }
 
 h1 {
-  font-size: 4em;
+  font-size: 3.5em;
   text-align: center;
+  color: black;
+  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 0.2px;
+  -webkit-text-stroke-color: black;
 }
 
 #instructions {
-  border: black 2px solid;
+  border: rgb(204, 125, 72) 2px solid;
   width: 35%;
   text-align: center;
   margin-bottom: 50px;
   margin-left: 50px;
-  background-color: rgb(212, 206, 206);
+  background-color: rgb(246, 233, 233);
 }
 
 #instructions h2 {
@@ -42,11 +46,11 @@ h1 {
 }
 
 .scoreBox {
-  border: 2px black solid;
+  border: 2px rgb(204, 125, 72) solid;
   width: 150px;
   height: 200px;
   margin: 50px;
-  background-color: rgb(212, 206, 206);
+  background-color: rgb(246, 233, 233);
   text-align: center;
   font-size: 1.5em;
 }
@@ -68,11 +72,33 @@ h1 {
 }
 #match {
   position: relative;
-  border: 2px black solid;
+  border: 4px rgb(204, 125, 72) solid;
   width: 200px;
   height: 200px;
   margin-left: 150px;
   margin-bottom: 50px;
-  background-color: rgb(212, 206, 206);
+  background-color: rgb(246, 233, 233);
   z-index: 0;
+}
+
+#startBtn,
+#replay {
+  border: rgb(204, 125, 72) 2px solid;
+  font-size: 2em;
+  padding: 20px 40px;
+  width: 20%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(246, 233, 233);
+  margin-top: 50px;
+}
+
+.level {
+  font-size: 2em;
+  text-align: center;
+  border: 2px black solid;
+  width: 30%;
+  margin: auto;
+  background-color: rgb(246, 233, 233);
 }
