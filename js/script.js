@@ -36,7 +36,7 @@ function Arrow(direction, offset) {
   this.arrrow = direction;
   this.img = new Image();
   this.img.src = `./images/${direction}-arrow.png`;
-  this.y = 160;
+  this.y = 190;
   this.x = offset;
   this.width = 100;
   this.height = 100;
@@ -86,36 +86,27 @@ function getRandomArrow() {
   allArrows.push(down, down1, down2);
 }
 
-//14 arrrow in total
 getRandomArrow();
 
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-  // if (allArrows.length === 0) {
-  //   gameOver.drawMe();
-  // }
+
   if (allArrows[allArrows.length - 1].x <= -1250) {
     gameOver.drawMe();
     audio.pause();
+    match.style.visibility = "hidden";
   }
 
   allArrows.forEach(function(el) {
-    //console.log(el);
-    if (score >= 100) {
+    if (score >= 200) {
       win.drawMe();
-      //winner.play();
       audio.pause();
       match.style.visibility = "hidden";
-      //replay.style.visibility = "visible";
-      //allArrows = allArrows;
-      // level2.style.visibility = "visible";
     } else if (el === []) {
       gameOver.drawMe();
     } else if (isActive) {
       el.x -= 6;
       el.drawMe();
-
-      //allArrows.splice(allArrows[el], 1);
     } else {
       gameOver.drawMe();
       audio.pause();
@@ -149,8 +140,6 @@ var win = {
     ctx.fillStyle = "black";
     ctx.strokeText("WINNER!!", this.x, this.y);
     ctx.gloabalAlpha = 1;
-    //change the image
-    //ctx.drawImage(winImg, 200, 30, 150, 150);
   }
 };
 
@@ -174,8 +163,6 @@ var gameOver = {
     ctx.fillStyle = "black";
     ctx.strokeText("Game Over", this.x, this.y);
     ctx.gloabalAlpha = 1;
-
-    //ctx.drawImage(gameOverImg, 200, 30, 150, 150);
   }
 };
 
@@ -189,7 +176,6 @@ var matchBox = {
   width: 200,
   height: 200
 };
-console.log(matchBox);
 
 function matched(box, arrows) {
   return arrows.some(
@@ -210,7 +196,7 @@ document.addEventListener("keydown", event => {
   switch (event.keyCode) {
     case 37:
       event.preventDefault();
-      if (matched(matchBox, leftArrows) && score < 100) {
+      if (matched(matchBox, leftArrows) && score < 200) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -229,7 +215,7 @@ document.addEventListener("keydown", event => {
 
     case 38:
       event.preventDefault();
-      if (matched(matchBox, upArrows) && score < 100) {
+      if (matched(matchBox, upArrows) && score < 200) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -248,7 +234,7 @@ document.addEventListener("keydown", event => {
 
     case 39:
       event.preventDefault();
-      if (matched(matchBox, rightArrows) && score < 100) {
+      if (matched(matchBox, rightArrows) && score < 200) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -267,7 +253,7 @@ document.addEventListener("keydown", event => {
 
     case 40:
       event.preventDefault();
-      if (matched(matchBox, downArrows) && score < 100) {
+      if (matched(matchBox, downArrows) && score < 200) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
