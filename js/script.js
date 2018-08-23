@@ -112,7 +112,7 @@ function drawScene() {
     } else if (el === []) {
       gameOver.drawMe();
     } else if (isActive) {
-      el.x -= 10;
+      el.x -= 6;
       el.drawMe();
 
       //allArrows.splice(allArrows[el], 1);
