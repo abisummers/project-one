@@ -95,6 +95,7 @@ function drawScene() {
     gameOver.drawMe();
     audio.pause();
     match.style.visibility = "hidden";
+    replay.style.visibility = "visible";
   }
 
   allArrows.forEach(function(el) {
@@ -105,7 +106,7 @@ function drawScene() {
     } else if (el === []) {
       gameOver.drawMe();
     } else if (isActive) {
-      el.x -= 6;
+      el.x -= 4;
       el.drawMe();
     } else {
       gameOver.drawMe();
@@ -162,6 +163,7 @@ var gameOver = {
     ctx.lineWidth = 2;
     ctx.fillStyle = "black";
     ctx.strokeText("Game Over", this.x, this.y);
+    //ctx.fillStyle = "rgb(246, 233, 233);";
     ctx.gloabalAlpha = 1;
   }
 };
