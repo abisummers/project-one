@@ -31,3 +31,5 @@ sound added while the arrows are moving. Sounds stops when the user wins or lose
 
 
 DAY #5
+Background image added. 
+Alterted the layout in prepration for the final presentation 
