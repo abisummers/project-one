@@ -1,7 +1,12 @@
 body {
   margin: 0;
-  background-color: rgb(53, 114, 101);
+  /* background-color: rgb(53, 114, 101); */
   font-family: "Open Sans Condensed", sans-serif;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url("../images/background.png");
 }
 
 .my-canvas {

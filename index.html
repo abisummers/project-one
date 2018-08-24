@@ -12,48 +12,49 @@
 
 <body>
 
+  <div class="img"></div>
+  <section id="content">
+    <canvas class="my-canvas" height="330px" width="1600px"></canvas>
+    <h1>Tap Tap Revolution</h1>
 
-  <canvas class="my-canvas" height="330px" width="1600px"></canvas>
-  <h1>Tap Tap Revolution</h1>
+    <section class="top flex">
+      <section id="instructions">
+        <h2>Instructions</h2>
+        <ol>
+          <li>Match the arrows as they arrive</li>
+          <li>Click on your keys when they're in the box</li>
+          <li>Score 200 points to win</li>
+          <li>Click start to play</li>
+        </ol>
+      </section>
 
-  <section class="top flex">
-    <section id="instructions">
-      <h2>Instructions</h2>
-      <ol>
-        <li>Match the arrows as they arrive</li>
-        <li>Click on your keys when they're in the box</li>
-        <li>Score 200 points to win</li>
-        <li>Click start to play</li>
-      </ol>
+
+
+      <section class="flex">
+        <div class="scoreBox">
+          <div> Score</div>
+          <div id="scores"> 0</div>
+          <div> LIVES</div>
+          <div id="lives">3</div>
+        </div>
+      </section>
     </section>
 
 
-
-    <section class="flex">
-      <div class="scoreBox">
-        <div> Score</div>
-        <div id="scores"> 0</div>
-        <div> LIVES</div>
-        <div id="lives">3</div>
+    <section>
+      <div class="movement">
+        <div id="match">
+        </div>
       </div>
     </section>
+
+    <button id="startBtn">START</button>
+
+    <button id="replay">PLAY AGAIN</button>
+    <button id="level2">LEVEL 2</button>
+
+
   </section>
-
-
-  <section>
-    <div class="movement">
-      <div id="match">
-      </div>
-    </div>
-  </section>
-
-  <button id="startBtn">START</button>
-
-  <button id="replay">PLAY AGAIN</button>
-  <button id="level2">LEVEL 2</button>
-
-
-
   <script src="./js/script.js "></script>
 
 </body>

@@ -103,6 +103,7 @@ function drawScene() {
       win.drawMe();
       audio.pause();
       match.style.visibility = "hidden";
+      replay.style.visibility = "visible";
     } else if (el === []) {
       gameOver.drawMe();
     } else if (isActive) {
@@ -135,11 +136,12 @@ var win = {
 
     ctx.localAlpha = this.opacity;
     ctx.font = "180px Open Sans Condensed";
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
 
     ctx.lineWidth = 2;
-    ctx.fillStyle = "black";
-    ctx.strokeText("WINNER!!", this.x, this.y);
+    ctx.fillStyle = "white";
+
+    ctx.fillText("WINNER!!", this.x, this.y);
     ctx.gloabalAlpha = 1;
   }
 };
@@ -158,12 +160,10 @@ var gameOver = {
 
     ctx.localAlpha = this.opacity;
     ctx.font = "180px Open Sans Condensed";
-    ctx.fillStyle = "black";
-
     ctx.lineWidth = 2;
-    ctx.fillStyle = "black";
-    ctx.strokeText("Game Over", this.x, this.y);
-    //ctx.fillStyle = "rgb(246, 233, 233);";
+    ctx.fillStyle = "white";
+
+    ctx.fillText("Game Over", this.x, this.y);
     ctx.gloabalAlpha = 1;
   }
 };
