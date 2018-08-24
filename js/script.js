@@ -95,6 +95,11 @@ function drawScene() {
   if (allArrows[allArrows.length - 1].x <= -1250) {
     gameOver.drawMe();
     audio.pause();
+    if (gameOverSoundActive !== "active") {
+      gameOverSound.play();
+      gameOverSound = "active";
+    }
+
     match.style.visibility = "hidden";
     replay.style.visibility = "visible";
   }
@@ -199,7 +204,7 @@ var scoreCounter = document.querySelector(".scores");
 var score = 0;
 
 var lives = 3;
-var livesCounter = document.querySelector(".lives");
+var livesCounter = document.querySelector("#lives");
 
 if (livesCounter === "GAME OVER") {
 }

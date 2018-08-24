@@ -106,6 +106,10 @@ function drawScene() {
   if (allArrows[allArrows.length - 1].x <= -1550) {
     gameOver.drawMe();
     audio.pause();
+    if (gameOverSoundActive !== "active") {
+      gameOverSound.play();
+      gameOverSound = "active";
+    }
     match.style.visibility = "hidden";
     replay.style.visibility = "visible";
   }
@@ -118,8 +122,10 @@ function drawScene() {
         winner.play();
         winner = "active";
       }
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
       match.style.visibility = "hidden";
-      replay.style.visibility = "visible";
     } else if (el === []) {
       gameOver.drawMe();
     } else if (isActive) {
@@ -206,7 +212,7 @@ var scoreCounter = document.querySelector(".scores");
 var score = 0;
 
 var lives = 3;
-var livesCounter = document.querySelector(".lives");
+var livesCounter = document.querySelector("#lives");
 
 if (livesCounter === "GAME OVER") {
 }
