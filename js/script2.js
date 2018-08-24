@@ -10,6 +10,9 @@ winnerSound = "inactive";
 var gameOverSound = new Audio("game-over.mp3");
 var gameOverSoundActive = "inactive";
 
+// var level2 = document.querySelector(".level2");
+// level2.style.visibility = "hidden";
+
 var replay = document.querySelector(".replay");
 replay.style.visibility = "hidden";
 
@@ -20,7 +23,6 @@ var startButton = document.querySelector(".startBtn");
 var instructions = document.querySelector(".instructions");
 
 startButton.onclick = function() {
-  console.log("click");
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
@@ -64,27 +66,36 @@ function getRandomArrow() {
   var left1 = new Arrow("left", 2700);
   var left2 = new Arrow("left", 3000);
   var left3 = new Arrow("left", 5100);
-  leftArrows.push(left, left1, left2, left3);
-  allArrows.push(left, left1, left2, left3);
+  var left4 = new Arrow("left", 7200);
+  var left5 = new Arrow("left", 7800);
+  leftArrows.push(left, left1, left2, left3, left4, left5);
+  allArrows.push(left, left1, left2, left3, left4, left5);
 
   var up = new Arrow("up", 1800);
   var up1 = new Arrow("up", 3900);
   var up3 = new Arrow("up", 4500);
   var up4 = new Arrow("up", 4800);
-  upArrows.push(up, up1, up3, up4);
-  allArrows.push(up, up1, up3, up4);
+  var up5 = new Arrow("up", 5700);
+  var up6 = new Arrow("up", 7500);
+  upArrows.push(up, up1, up3, up4, up5, up6);
+  allArrows.push(up, up1, up3, up4, up5, up6);
 
   var right = new Arrow("right", 2400);
   var right1 = new Arrow("right", 3600);
   var right2 = new Arrow("right", 5400);
-  rightArrows.push(right, right1, right2);
-  allArrows.push(right, right1, right2);
+  var right3 = new Arrow("right", 6000);
+  var right4 = new Arrow("right", 6300);
+  rightArrows.push(right, right1, right2, right3, right4);
+  allArrows.push(right, right1, right2, right3, right4);
 
   var down = new Arrow("down", 1500);
   var down1 = new Arrow("down", 3300);
   var down2 = new Arrow("down", 4200);
-  downArrows.push(down, down1, down2);
-  allArrows.push(down, down1, down2);
+  var down3 = new Arrow("down", 6600);
+  var down4 = new Arrow("down", 6900);
+  var down = new Arrow("down", 8100);
+  downArrows.push(down, down1, down2, down3, down4);
+  allArrows.push(down, down1, down2, down3, down4);
 }
 
 getRandomArrow();
@@ -92,7 +103,7 @@ getRandomArrow();
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
-  if (allArrows[allArrows.length - 1].x <= -1250) {
+  if (allArrows[allArrows.length - 1].x <= -1550) {
     gameOver.drawMe();
     audio.pause();
     match.style.visibility = "hidden";
@@ -100,23 +111,19 @@ function drawScene() {
   }
 
   allArrows.forEach(function(el) {
-    if (score >= 200) {
+    if (score >= 300) {
       win.drawMe();
       audio.pause();
       if (winnerSound !== "active") {
         winner.play();
         winner = "active";
-
-        setTimeout(() => {
-          window.location.href = "index2.html";
-        }, 2000);
       }
       match.style.visibility = "hidden";
-      //replay.style.visibility = "visible";
+      replay.style.visibility = "visible";
     } else if (el === []) {
       gameOver.drawMe();
     } else if (isActive) {
-      el.x -= 4;
+      el.x -= 6;
       el.drawMe();
     } else {
       gameOver.drawMe();
@@ -151,7 +158,7 @@ var win = {
     ctx.lineWidth = 2;
     ctx.fillStyle = "white";
 
-    ctx.fillText("🔥LEVEL 2!!🔥", this.x, this.y);
+    ctx.fillText("🔥WINNER!!🔥", this.x, this.y);
     ctx.gloabalAlpha = 1;
   }
 };
@@ -208,7 +215,7 @@ document.addEventListener("keydown", event => {
   switch (event.keyCode) {
     case 37:
       event.preventDefault();
-      if (matched(matchBox, leftArrows) && score < 200) {
+      if (matched(matchBox, leftArrows) && score < 300) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -227,7 +234,7 @@ document.addEventListener("keydown", event => {
 
     case 38:
       event.preventDefault();
-      if (matched(matchBox, upArrows) && score < 200) {
+      if (matched(matchBox, upArrows) && score < 300) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -246,7 +253,7 @@ document.addEventListener("keydown", event => {
 
     case 39:
       event.preventDefault();
-      if (matched(matchBox, rightArrows) && score < 200) {
+      if (matched(matchBox, rightArrows) && score < 300) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
@@ -265,7 +272,7 @@ document.addEventListener("keydown", event => {
 
     case 40:
       event.preventDefault();
-      if (matched(matchBox, downArrows) && score < 200) {
+      if (matched(matchBox, downArrows) && score < 300) {
         score += 10;
         scoreCounter.innerHTML = score;
         match.style.borderColor = "green";
