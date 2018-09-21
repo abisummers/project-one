@@ -111,10 +111,6 @@ function drawScene() {
       if (winnerSound !== "active") {
         winner.play();
         winner = "active";
-
-        setTimeout(() => {
-          window.location.href = "index2.html";
-        }, 2000);
       }
       match.style.visibility = "hidden";
       //replay.style.visibility = "visible";
@@ -156,7 +152,7 @@ var win = {
     ctx.lineWidth = 2;
     ctx.fillStyle = "white";
 
-    ctx.fillText("🔥LEVEL 2!!🔥", this.x, this.y);
+    ctx.fillText("🔥WINNER🔥", this.x, this.y);
     ctx.gloabalAlpha = 1;
   }
 };
