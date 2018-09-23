@@ -19,20 +19,19 @@ match.style.visibility = "hidden";
 var startButton = document.querySelector(".startBtn");
 var instructions = document.querySelector(".instructions");
 
-startButton.onclick = function() {
+function start() {
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
   audio.play();
+  isActive = true;
   drawScene();
-};
+}
 
-replay.onclick = function() {
-  window.location.href = "index.html";
-};
+startButton.addEventListener("click", start);
+replay.addEventListener("click", () => window.location.reload());
 
 function Arrow(direction, offset) {
-  isActive = true;
   this.arrrow = direction;
   this.img = new Image();
   this.img.src = `./images/${direction}-arrow.png`;
@@ -52,7 +51,7 @@ var upArrows = [];
 var leftArrows = [];
 var rightArrows = [];
 
-function getRandomArrow() {
+function generateArrows() {
   allArrows = [];
   downArrows = [];
   upArrows = [];
@@ -86,7 +85,7 @@ function getRandomArrow() {
   allArrows.push(down, down1, down2);
 }
 
-getRandomArrow();
+generateArrows();
 
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
@@ -139,7 +138,7 @@ var win = {
   x: 380,
   y: 160,
   opacity: 0,
-  drawMe: function() {
+  drawMe() {
     if (this.opacity < 1) {
       this.opacity += 0.01;
     }
@@ -151,7 +150,7 @@ var win = {
     ctx.lineWidth = 2;
     ctx.fillStyle = "white";
 
-    ctx.fillText("🔥WINNER🔥", this.x, this.y);
+    ctx.fillText("🔥 WINNER 🔥", this.x, this.y);
     ctx.gloabalAlpha = 1;
   }
 };
@@ -160,7 +159,7 @@ var gameOver = {
   x: 350,
   y: 160,
   opacity: 0,
-  drawMe: function() {
+  drawMe() {
     if (this.opacity < 1) {
       this.opacity += 0.01;
     }
@@ -198,7 +197,20 @@ var score = 0;
 var lives = 3;
 var livesCounter = document.querySelector("#lives");
 
-if (livesCounter === "GAME OVER") {
+function correctKeyPress(points) {
+  score += points;
+  scoreCounter.innerHTML = score;
+  match.style.borderColor = "green";
+}
+
+function incorrectKeyPress() {
+  if (lives > 0) {
+    lives -= 1;
+    livesCounter.innerHTML = lives;
+    match.style.borderColor = "red";
+  } else {
+    isActive = false;
+  }
 }
 
 document.addEventListener("keydown", event => {
@@ -206,76 +218,52 @@ document.addEventListener("keydown", event => {
     case 37:
       event.preventDefault();
       if (matched(matchBox, leftArrows) && score < 200) {
-        score += 10;
-        scoreCounter.innerHTML = score;
-        match.style.borderColor = "green";
+        correctKeyPress(10);
       } else if (
         matched(matchBox, upArrows) ||
         matched(matchBox, rightArrows) ||
         matched(matchBox, downArrows)
       ) {
-        if (lives === 0) {
-          return (isActive = false);
-        } else lives -= 1;
-        livesCounter.innerHTML = lives;
-        match.style.borderColor = "red";
+        incorrectKeyPress();
       }
       break;
 
     case 38:
       event.preventDefault();
       if (matched(matchBox, upArrows) && score < 200) {
-        score += 10;
-        scoreCounter.innerHTML = score;
-        match.style.borderColor = "green";
+        correctKeyPress(10);
       } else if (
         matched(matchBox, leftArrows) ||
         matched(matchBox, rightArrows) ||
         matched(matchBox, downArrows)
       ) {
-        if (lives === 0) {
-          return (isActive = false);
-        } else lives -= 1;
-        livesCounter.innerHTML = lives;
-        match.style.borderColor = "red";
+        incorrectKeyPress();
       }
       break;
 
     case 39:
       event.preventDefault();
       if (matched(matchBox, rightArrows) && score < 200) {
-        score += 10;
-        scoreCounter.innerHTML = score;
-        match.style.borderColor = "green";
+        correctKeyPress(10);
       } else if (
         matched(matchBox, upArrows) ||
         matched(matchBox, leftArrows) ||
         matched(matchBox, downArrows)
       ) {
-        if (lives === 0) {
-          return (isActive = false);
-        } else lives -= 1;
-        livesCounter.innerHTML = lives;
-        match.style.borderColor = "red";
+        incorrectKeyPress();
       }
       break;
 
     case 40:
       event.preventDefault();
       if (matched(matchBox, downArrows) && score < 200) {
-        score += 10;
-        scoreCounter.innerHTML = score;
-        match.style.borderColor = "green";
+        correctKeyPress(10);
       } else if (
         matched(matchBox, upArrows) ||
         matched(matchBox, rightArrows) ||
         matched(matchBox, leftArrows)
       ) {
-        if (lives === 0) {
-          return (isActive = false);
-        } else lives -= 1;
-        livesCounter.innerHTML = lives;
-        match.style.borderColor = "red";
+        incorrectKeyPress();
       }
       break;
   }
