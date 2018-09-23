@@ -31,7 +31,7 @@ startButton.addEventListener("click", start);
 replay.addEventListener("click", () => window.location.reload());
 
 function Arrow(direction, offset) {
-  this.arrrow = direction;
+  this.direction = direction;
   this.img = new Image();
   this.img.src = `./images/${direction}-arrow.png`;
   this.y = 190;
@@ -201,70 +201,26 @@ function incorrectKeyPress() {
 }
 
 document.addEventListener("keydown", event => {
-  // const directions = [
-  //   { keyCode: 38, arrows: upArrows },
-  //   { keyCode: 40, arrows: downArrows },
-  //   { keyCode: 37, arrows: leftArrows },
-  //   { keyCode: 39, arrows: rightArrows }
-  // ];
+  const directions = [
+    { keyCode: 37, direction: "left" },
+    { keyCode: 38, direction: "up" },
+    { keyCode: 39, direction: "right" },
+    { keyCode: 40, direction: "down" }
+  ];
 
-  // if (directions.some(({ keyCode }) => keyCode === event.keyCode)) {
-  //   event.preventDefault();
-  //   // matchi logic
-  //   console.log("only for arrow keys");
-  // }
+  const currentDirection = directions.find(
+    ({ keyCode }) => keyCode === event.keyCode
+  );
 
-  switch (event.keyCode) {
-    case 37:
-      event.preventDefault();
-      if (matched(matchBox, leftArrows) && score < 200) {
-        correctKeyPress(10);
-      } else if (
-        matched(matchBox, upArrows) ||
-        matched(matchBox, rightArrows) ||
-        matched(matchBox, downArrows)
-      ) {
-        incorrectKeyPress();
-      }
-      break;
-
-    case 38:
-      event.preventDefault();
-      if (matched(matchBox, upArrows) && score < 200) {
-        correctKeyPress(10);
-      } else if (
-        matched(matchBox, leftArrows) ||
-        matched(matchBox, rightArrows) ||
-        matched(matchBox, downArrows)
-      ) {
-        incorrectKeyPress();
-      }
-      break;
-
-    case 39:
-      event.preventDefault();
-      if (matched(matchBox, rightArrows) && score < 200) {
-        correctKeyPress(10);
-      } else if (
-        matched(matchBox, upArrows) ||
-        matched(matchBox, leftArrows) ||
-        matched(matchBox, downArrows)
-      ) {
-        incorrectKeyPress();
-      }
-      break;
-
-    case 40:
-      event.preventDefault();
-      if (matched(matchBox, downArrows) && score < 200) {
-        correctKeyPress(10);
-      } else if (
-        matched(matchBox, upArrows) ||
-        matched(matchBox, rightArrows) ||
-        matched(matchBox, leftArrows)
-      ) {
-        incorrectKeyPress();
-      }
-      break;
+  if (currentDirection) {
+    event.preventDefault();
+    const correctArrows = allArrows.filter(
+      ({ direction }) => currentDirection.direction === direction
+    );
+    if (matched(matchBox, correctArrows)) {
+      correctKeyPress(10);
+    } else {
+      incorrectKeyPress();
+    }
   }
 });
