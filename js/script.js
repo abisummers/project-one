@@ -24,7 +24,6 @@ function start() {
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
   audio.play();
-  isActive = true;
   drawScene();
 }
 
@@ -87,10 +86,12 @@ function generateArrows() {
 
 generateArrows();
 
+const isOffScreen = arrow => arrow.x <= -1250;
+
 function drawScene() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
-  if (allArrows[allArrows.length - 1].x <= -1250) {
+  if (lives === 0 || isOffScreen(allArrows[allArrows.length - 1])) {
     gameOver.drawMe();
     audio.pause();
     if (gameOverSoundActive !== "active") {
@@ -100,38 +101,26 @@ function drawScene() {
 
     match.style.visibility = "hidden";
     replay.style.visibility = "visible";
+    return;
   }
 
-  allArrows.forEach(function(el) {
-    if (score >= 200) {
-      win.drawMe();
-      audio.pause();
-      if (winnerSound !== "active") {
-        winner.play();
-        winner = "active";
-      }
-      match.style.visibility = "hidden";
-      //replay.style.visibility = "visible";
-    } else if (el === []) {
-      gameOver.drawMe();
-    } else if (isActive) {
-      el.x -= 4;
-      el.drawMe();
-    } else {
-      gameOver.drawMe();
-      audio.pause();
-      if (gameOverSoundActive !== "active") {
-        gameOverSound.play();
-        gameOverSoundActive = "active";
-      }
-      match.style.visibility = "hidden";
-      replay.style.visibility = "visible";
+  if (score >= 200) {
+    win.drawMe();
+    audio.pause();
+    if (winnerSound !== "active") {
+      winner.play();
+      winner = "active";
     }
+    match.style.visibility = "hidden";
+    replay.style.visibility = "visible";
+  }
+
+  allArrows.forEach(el => {
+    el.x -= 4;
+    el.drawMe();
   });
 
-  requestAnimationFrame(function() {
-    drawScene();
-  });
+  requestAnimationFrame(drawScene);
 }
 
 var win = {
@@ -208,12 +197,23 @@ function incorrectKeyPress() {
     lives -= 1;
     livesCounter.innerHTML = lives;
     match.style.borderColor = "red";
-  } else {
-    isActive = false;
   }
 }
 
 document.addEventListener("keydown", event => {
+  // const directions = [
+  //   { keyCode: 38, arrows: upArrows },
+  //   { keyCode: 40, arrows: downArrows },
+  //   { keyCode: 37, arrows: leftArrows },
+  //   { keyCode: 39, arrows: rightArrows }
+  // ];
+
+  // if (directions.some(({ keyCode }) => keyCode === event.keyCode)) {
+  //   event.preventDefault();
+  //   // matchi logic
+  //   console.log("only for arrow keys");
+  // }
+
   switch (event.keyCode) {
     case 37:
       event.preventDefault();
