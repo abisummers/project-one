@@ -44,47 +44,25 @@ function Arrow(direction, offset) {
   };
 }
 
-var allArrows = [];
-var downArrows = [];
-var upArrows = [];
-var leftArrows = [];
-var rightArrows = [];
+const directions = [
+  { keyCode: 37, direction: "left" },
+  { keyCode: 38, direction: "up" },
+  { keyCode: 39, direction: "right" },
+  { keyCode: 40, direction: "down" }
+];
 
-function generateArrows() {
-  allArrows = [];
-  downArrows = [];
-  upArrows = [];
-  leftArrows = [];
-  rightArrows = [];
-
-  var left = new Arrow("left", 2100);
-  var left1 = new Arrow("left", 2700);
-  var left2 = new Arrow("left", 3000);
-  var left3 = new Arrow("left", 5100);
-  leftArrows.push(left, left1, left2, left3);
-  allArrows.push(left, left1, left2, left3);
-
-  var up = new Arrow("up", 1800);
-  var up1 = new Arrow("up", 3900);
-  var up3 = new Arrow("up", 4500);
-  var up4 = new Arrow("up", 4800);
-  upArrows.push(up, up1, up3, up4);
-  allArrows.push(up, up1, up3, up4);
-
-  var right = new Arrow("right", 2400);
-  var right1 = new Arrow("right", 3600);
-  var right2 = new Arrow("right", 5400);
-  rightArrows.push(right, right1, right2);
-  allArrows.push(right, right1, right2);
-
-  var down = new Arrow("down", 1500);
-  var down1 = new Arrow("down", 3300);
-  var down2 = new Arrow("down", 4200);
-  downArrows.push(down, down1, down2);
-  allArrows.push(down, down1, down2);
+function randomDirection() {
+  return directions[Math.floor(Math.random() * directions.length)].direction;
 }
 
-generateArrows();
+function generateArrows({ number, interval, beginning }) {
+  return Array.from(
+    { length: number },
+    (_, i) => new Arrow(randomDirection(), beginning + interval * i)
+  );
+}
+
+let allArrows = generateArrows({ number: 14, interval: 300, beginning: 1500 });
 
 const isOffScreen = arrow => arrow.x <= -1250;
 
@@ -174,7 +152,8 @@ var matchBox = {
   height: 200
 };
 
-function matched(box, arrows) {
+function matched(arrows) {
+  const box = matchBox;
   return arrows.some(
     arrow => box.x + box.width >= arrow.x + arrow.width && box.x <= arrow.x
   );
@@ -201,13 +180,6 @@ function incorrectKeyPress() {
 }
 
 document.addEventListener("keydown", event => {
-  const directions = [
-    { keyCode: 37, direction: "left" },
-    { keyCode: 38, direction: "up" },
-    { keyCode: 39, direction: "right" },
-    { keyCode: 40, direction: "down" }
-  ];
-
   const currentDirection = directions.find(
     ({ keyCode }) => keyCode === event.keyCode
   );
@@ -217,7 +189,7 @@ document.addEventListener("keydown", event => {
     const correctArrows = allArrows.filter(
       ({ direction }) => currentDirection.direction === direction
     );
-    if (matched(matchBox, correctArrows)) {
+    if (matched(correctArrows)) {
       correctKeyPress(10);
     } else {
       incorrectKeyPress();
