@@ -97,7 +97,7 @@ function drawScene() {
     audio.pause();
     if (gameOverSoundActive !== "active") {
       gameOverSound.play();
-      gameOverSound = "active";
+      gameOverSoundActive = "active";
     }
 
     match.style.visibility = "hidden";
@@ -124,7 +124,7 @@ function drawScene() {
       audio.pause();
       if (gameOverSoundActive !== "active") {
         gameOverSound.play();
-        gameOverSound = "active";
+        gameOverSoundActive = "active";
       }
       match.style.visibility = "hidden";
       replay.style.visibility = "visible";
@@ -156,9 +156,6 @@ var win = {
     ctx.gloabalAlpha = 1;
   }
 };
-
-var gameOverImg = new Image();
-gameOverImg.src = "./images/game-over.gif";
 
 var gameOver = {
   x: 350,
