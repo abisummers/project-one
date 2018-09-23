@@ -20,7 +20,6 @@ var startButton = document.querySelector(".startBtn");
 var instructions = document.querySelector(".instructions");
 
 startButton.onclick = function() {
-  console.log("click");
   instructions.style.visibility = "hidden";
   startButton.style.visibility = "hidden";
   match.style.visibility = "visible";
